@@ -1,0 +1,258 @@
+<HTML !DOCTYPE>
+
+<head>
+    <title> Darrell Jefferson</title>
+    <!-- jQuery library -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css"/>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxchart.core.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdraw.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"> </script>
+    <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+
+                $(document).ready(function () {
+                    var url = "dao.php/bp";
+                    // prepare the data
+                    var source =
+                    {
+                        datatype: "json",
+                        datafields: [
+                            {name: 'id', type: 'string'},
+                            {name: 'eff_date', type: 'date'},
+                            {name: 'systalic', type: 'int'},
+                            {name: 'diastalic', type: 'int'},
+                            {name: 'pulse', type: 'int'}
+                        ],
+                        id: 'id',
+                        url: url
+                    };
+                    var dataAdapter = new $.jqx.dataAdapter(source);
+
+                    // perform data binding.
+                    dataAdapter.dataBind();
+
+
+                    var BloodPressureData = {
+                        records: [],
+                        datatype: "array"
+                    };
+
+
+                    var sampleData = [
+                        {Day: 'Monday', Keith: 225, Erica: 115, George: 86},
+                        {Day: 'Tuesday', Keith: 125, Erica: 85, George: 74},
+                        {Day: 'Wednesday', Keith: 130, Erica: 55, George: 92},
+                        {Day: 'Thursday', Keith: 135, Erica: 65, George: 70},
+                        {Day: 'Friday', Keith: 204, Erica: 118, George: 84},
+                        {Day: 'Saturday', Keith: 154, Erica: 117, George: 90},
+                        {Day: 'Sunday', Keith: 160, Erica: 103, George: 89}
+                    ];
+
+                    <!-- var dataAdapter = new $.jqx.dataAdapter(source); -->
+
+                    // prepare jqxChart settings
+                    var settings = {
+                        title: "Darrell Pressure Results",
+                        description: "Real-Time Blood Pressure Reading",
+                        padding: {left: 5, top: 5, right: 5, bottom: 5},
+                        titlePadding: {left: 90, top: 0, right: 0, bottom: 10},
+                        source: dataAdapter,
+                        xAxis: {
+                            dataField: 'Day',
+                            gridLines: {visible: true}
+                        },
+                        colorScheme: 'scheme01',
+                        seriesGroups: [
+                            {
+                                type: 'stackedline',
+                                columnsGapPercent: 30,
+                                seriesGapPercent: 0,
+                                valueAxis: {
+                                    minValue: 10,
+                                    maxValue: 300,
+                                    unitInterval: 10,
+                                    description: 'mmGh'
+                                },
+                                series: [
+                                    {dataField: 'systalic', displayText: 'Sysalic'},
+                                    {dataField: 'distalic', displayText: 'Disalitc'},
+                                    {dataField: 'pulse', displayText: 'Heart Beat'}
+                                ]
+                            }
+                        ]
+                    };
+
+                    // select the chartContainer DIV element and render the chart.
+                    $('#chartContainer').jqxChart(settings);
+                });
+    </script>
+
+
+</head>
+
+<body style="background-color: #151515">
+
+<div class="container">
+
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Darrell Blood Pressure</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="nav navbar-nav">
+
+                    <li><a href="#">Home</a></li>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Reports <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">column - simple column series</a></li>
+                            <li><a href="#">stackedcolumn - stacked column series</a></li>
+                            <li><a href="#">stackedcolumn100 - percentage stacked columns</a></li>
+                            <li><a href="#">rangecolumn - floating column between two values</a></li>
+                            <li><a href="#">line - simple streight lines connecting the value points</a></li>
+                            <li><a href="#">stackedline - stacked lines</a></li>
+                            <li><a href="#">stackedline100 - percentage stacked lines</a></li>
+                            <li><a href="#">spline - smooth lines connecting the value points</a></li>
+                            <li><a href="#">stackedspline - smooth stacked lines</a></li>
+                            <li><a href="#">stackedspline100 - percentage stacked smooth lines</a></li>
+                            <li><a href="#">stepline - step line</a></li>
+                            <li><a href="#">stackedstepline - stacked step line</a></li>
+                            <li><a href="#">stackedstepline100 - percentage stacked step line</a></li>
+                            <li><a href="#">area - area connecting the value points with streight lines</a></li>
+                            <li><a href="#">stackedarea- stacked area with streight lines between the points</a></li>
+                            <li><a href="#">rangearea - floating area between pairs of value points</a></li>
+                            <li><a href="#">stackedline100 - percentage stacked area</a></li>
+                            <li><a href="#">splinearea - smooth area connecting the value points</a></li>
+                            <li><a href="#">splinerangearea - smooth floating area between pairs of value points</a>
+                            </li>
+                            <li><a href="#">stackedsplineara - smooth stacked area</a></li>
+                            <li><a href="#">stackedsplinearea100 - percentage stacked smooth area</a></li>
+                            <li><a href="#">steplinearea - step area connecting the value points</a></li>
+                            <li><a href="#">stackedsteplineara - step stacked area</a></li>
+                            <li><a href="#">stackedsteplinearea100 - percentage stacked step area</a></li>
+                            <li><a href="#">pie - circular chart divided into sectors, illustrating proportion</a></li>
+                            <li><a href="#">donut - chart divided into circular sectors with different inner and outer
+                                radius</a></li>
+                            <li><a href="#">scatter - data is displayed as a collection of points</a></li>
+                            <li><a href="#">bubble - data is displayed as a collection of bubbles</a></li>
+                            <li><a href="#">candlestick - display candlestick series using open, high, low, close data
+                                points</a></li>
+                            <li><a href="#">ohlc - display OHLC series using open, high, low, close data points</a></li>
+                            <li><a href="#">waterfall - waterfall chart</a></li>
+                            <li><a href="#">stackedwaterfall - stacked waterfall chart</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <!-- Button trigger modal -->
+                <li>
+                    <a href="#myModal" class="btn" data-toggle="modal" data-target="#myModal"> Login </a>
+
+                </li>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Login</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <form action="login.php" method="get">
+                                    <div class="form-group">
+                                        <label> UserID</label>
+                                        <input type="text"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Password</label>
+                                        <input type="password"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-success" >Login</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                </ul>
+
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+</div>
+
+
+<div id='chartContainer' style="width:100%; height: 75%"/>
+
+</div>
+
+
+<script type="text/javascript">
+
+       var bpobj = function () {
+
+           this.stalic = 0;
+
+
+
+       }
+
+       var medicalObj = {
+
+           person : "Herry",
+           age : 20
+       }
+
+
+
+        Persons = Backbone.Collection.extend({
+            url: 'dao.php/bp'
+        });
+
+
+        Person = Backbone.Model.extend({
+            url: 'dao.php/bp'
+        });
+
+
+
+</script>
+
+
+    </body>
+
+
+</HTML>
